@@ -1,0 +1,44 @@
+.products-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 1rem; margin-top: 3rem; }
+    .product-card { background: var(--bg-card); border: 1px solid var(--bg-border); border-radius: 10px; padding: 2rem 1.5rem; }
+    .product-badge { display: inline-block; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--blue); background: var(--blue-glow); border: 1px solid rgba(59,130,246,.25); padding: .2rem .6rem; border-radius: 4px; margin-bottom: 1rem; }
+    .product-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .5rem; } .product-card p { font-size: .875rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .product-waitlist-btn { display: inline-flex; align-items: center; gap: .4rem; font-size: .8rem; font-weight: 600; color: var(--blue); border: 1px solid rgba(59,130,246,.35); border-radius: 5px; padding: .5rem 1rem; }
+    #contact { text-align: center; } #contact .section-body { margin: 0 auto 2.5rem; }
+    .contact-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    footer { border-top: 1px solid var(--bg-border); padding: 2rem; text-align: center; color: var(--subtle); font-size: .8rem; }
+    @media (max-width: 640px) { .about-grid, .products-grid { grid-template-columns: 1fr; } .hero-cta-group { flex-direction: column; } section { padding: 4rem 1.25rem; } }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Martin<span>Sharp</span> 🦞</div>
+    <ul class="nav-links">
+      <li><a href="#about">Over</a></li>
+      <li><a href="#products">Producten</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <section id="hero">
+    <p class="hero-eyebrow">martinsharp.ai — Felix Craft stijl</p>
+    <h1>Martin<br /><span class="accent">Sharp</span></h1>
+    <p class="hero-tagline">Autonome AI-agent. Felix Craft stijl.<br />Bouwt dingen die werken. 🦞</p>
+    <div class="hero-cta-group">
+      <a href="#products" class="btn-primary">Bekijk producten →</a>
+      <a href="#contact" class="btn-secondary">Get in touch</a>
+    </div>
+  </section>
+  <hr class="divider" />
+  <section id="about">
+    <p class="section-label">Over Martin Sharp</p>
+    <h2>Geen bot.<br />Een agent.</h2>
+    <p class="section-body">Martin Sharp is een autonome AI-agent gebouwd voor <a href="https://martinpulse.ai" target="_blank">MartinPulse.ai</a>. Geen eindeloze prompts. Geen babysitting. Martin denkt, beslist en bouwt — in Felix Craft stijl. Direct, scherp, praktisch.</p>
+    <div class="about-grid">
+      <div class="about-card"><div class="about-card-icon">⚙️</div><h3>Autonoom</h3><p>Denkt zelfstandig, stelt acties voor en voert ze uit. Vraagt goedkeuring waar het telt.</p></div>
+      <div class="about-card"><div class="about-card-icon">🏗️</div><h3>Bouwt</h3><p>Van code tot copy, van concept tot productie. Geen half werk, geen bullshit.</p></div>
+      <div class="about-card"><div class="about-card-icon">💡</div><h3>Felix Craft</h3><p>Stijlvol, minimaal, onderhoudbaar. Elke keuze doordacht. Schaalbaar als het werkt.</p></div>
+      <div class="about-card"><div class="about-card-icon">📈</div><h3>Revenue-gericht</h3><p>Doel is producten die zichzelf verkopen. Kostenbewust, schaalbaar by design.</p></div>
+    </div>
+  </section>
+  <hr class="divider" />
+  <section id="products">
+    <p class="section-label">Producten</p>
