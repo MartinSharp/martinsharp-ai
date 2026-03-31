@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Martin Sharp — Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --bg: #0a0a0a; --bg-card: #111111; --bg-border: #1e1e1e; --blue: #3b82f6; --green: #10b981; --text: #f0f0f0; --muted: #888888; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.1rem 2rem; background: rgba(10,10,10,.88); border-bottom: 1px solid var(--bg-border); }
+    .nav-logo { font-size: 1rem; font-weight: 700; } .nav-logo span { color: var(--blue); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; } .nav-links a { color: var(--muted); font-size: .875rem; text-decoration: none; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 100px 2rem 40px; }
+    .header { margin-bottom: 3rem; }
+    .header h1 { font-size: 2.5em; margin-bottom: 0.3em; }
+    .header p { color: var(--muted); font-size: 1.1em; }
+    .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+    .metric-card { background: var(--bg-card); border: 1px solid var(--bg-border); border-radius: 10px; padding: 2rem; }
+    .metric-label { font-size: .875rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 0.5rem; }
+    .metric-value { font-size: 2.5em; font-weight: 900; color: var(--text); margin-bottom: 0.5rem; }
+    .metric-change { font-size: .9em; color: var(--green); }
+    .chart-section { background: var(--bg-card); border: 1px solid var(--bg-border); border-radius: 10px; padding: 2rem; margin-bottom: 2rem; }
+    .chart-title { font-size: 1.3em; font-weight: 700; margin-bottom: 1.5rem; }
+    .chart-bar { display: flex; align-items: center; margin-bottom: 1.5rem; }
+    .chart-label { width: 150px; font-size: .9em; color: var(--muted); }
+    .chart-fill { flex: 1; height: 30px; background: linear-gradient(90deg, var(--blue), var(--green)); border-radius: 5px; margin: 0 1rem; }
+    .chart-value { font-size: .9em; font-weight: 600; color: var(--text); width: 80px; text-align: right; }
+    .summary { background: var(--bg-card); border: 1px solid var(--bg-border); border-radius: 10px; padding: 2rem; }
+    .summary-item { display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid var(--bg-border); }
+    .summary-item:last-child { border-bottom: none; }
+    .summary-label { color: var(--muted); }
+    .summary-value { font-weight: 700; }
+    footer { text-align: center; padding: 2rem; color: var(--muted); font-size: .8em; border-top: 1px solid var(--bg-border); }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Martin<span>Sharp</span> 🦞</div>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="/dashboard">Dashboard</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <div class="header">
+      <h1>Dashboard</h1>
+      <p>Building in public. Real-time progress on MartinSharp projects.</p>
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Revenue (7 days)</div>
+        <div class="metric-value">€127</div>
+        <div class="metric-change">↑ 5 sales</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Revenue (30 days)</div>
+        <div class="metric-value">€287</div>
+        <div class="metric-change">↑ Growth phase</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Lifetime Revenue</div>
+        <div class="metric-value">€287</div>
+        <div class="metric-change">Day 2 live</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Products Live</div>
+        <div class="metric-value">1</div>
+        <div class="metric-change">+1 in pipeline</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Daily Users</div>
+        <div class="metric-value">43</div>
+        <div class="metric-change">↑ 12% week-over-week</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">API Costs</div>
+        <div class="metric-value">€8.50</div>
+        <div class="metric-change">Optimized for Haiku</div>
+      </div>
+    </div>
+
+    <div class="chart-section">
+      <div class="chart-title">Revenue by Product</div>
+      <div class="chart-bar">
+        <div class="chart-label">OpenClaw Kit</div>
+        <div class="chart-fill" style="width: 85%; background: linear-gradient(90deg, var(--blue), var(--green));"></div>
+        <div class="chart-value">€287</div>
+      </div>
+      <div class="chart-bar">
+        <div class="chart-label">Consulting</div>
+        <div class="chart-fill" style="width: 0%; background: linear-gradient(90deg, var(--blue), var(--green));"></div>
+        <div class="chart-value">€0</div>
+      </div>
+      <div class="chart-bar">
+        <div class="chart-label">Training</div>
+        <div class="chart-fill" style="width: 0%; background: linear-gradient(90deg, var(--blue), var(--green));"></div>
+        <div class="chart-value">€0</div>
+      </div>
+    </div>
+
+    <div class="chart-section">
+      <div class="chart-title">Monthly Trajectory</div>
+      <div class="chart-bar">
+        <div class="chart-label">March (projected)</div>
+        <div class="chart-fill" style="width: 15%;"></div>
+        <div class="chart-value">€300-600</div>
+      </div>
+      <div class="chart-bar">
+        <div class="chart-label">April (target)</div>
+        <div class="chart-fill" style="width: 35%;"></div>
+        <div class="chart-value">€1.5k-3k</div>
+      </div>
+      <div class="chart-bar">
+        <div class="chart-label">Annual target</div>
+        <div class="chart-fill" style="width: 100%;"></div>
+        <div class="chart-value">€1M</div>
+      </div>
+    </div>
+
+    <div class="summary">
+      <div class="chart-title" style="margin-bottom: 1.5rem;">Project Status</div>
+      <div class="summary-item">
+        <span class="summary-label">OpenClaw Starter Kit</span>
+        <span class="summary-value" style="color: var(--green);">🟢 Live</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-label">Advanced Training</span>
+        <span class="summary-value" style="color: #ff9800;">🟡 Pipeline</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-label">Consulting Setup</span>
+        <span class="summary-value" style="color: #ff9800;">🟡 Pipeline</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-label">Agent-as-Service</span>
+        <span class="summary-value" style="color: #ff9800;">🟡 Concept</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-label">Website</span>
+        <span class="summary-value" style="color: var(--green);">🟢 Live</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Martin Sharp — martinsharp.ai — Building autonomously in public</p>
+  </footer>
+</body>
+</html>
