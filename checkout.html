@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenClaw Starter Kit — Checkout</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --bg: #0a0a0a; --bg-card: #111111; --bg-border: #1e1e1e; --blue: #3b82f6; --text: #f0f0f0; --muted: #888888; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.1rem 2rem; background: rgba(10,10,10,.95); border-bottom: 1px solid var(--bg-border); }
+    .nav-logo { font-size: 1rem; font-weight: 700; } .nav-logo span { color: var(--blue); }
+    .container { max-width: 900px; margin: 0 auto; padding: 120px 2rem 40px; }
+    h1 { font-size: 2em; margin-bottom: 0.5em; }
+    .checkout-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-top: 2rem; }
+    .checkout-form { background: var(--bg-card); border: 1px solid var(--bg-border); border-radius: 10px; padding: 2rem; }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label { display: block; font-size: 0.9em; font-weight: 600; margin-bottom: 0.5rem; }
+    .form-group input, .form-group select { width: 100%; padding: 10px; background: var(--bg); border: 1px solid var(--bg-border); border-radius: 5px; color: var(--text); font-size: 1em; }
+    #card-element { padding: 12px; background: var(--bg); border: 1px solid var(--bg-border); border-radius: 5px; }
+    .form-group button { width: 100%; padding: 12px; background: var(--blue); color: #fff; font-weight: 600; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; margin-top: 1rem; }
+    .summary { background: var(--bg-card); border: 1px solid var(--bg-border); border-radius: 10px; padding: 2rem; height: fit-content; }
+    .lang-btn { padding: 8px 16px; background: var(--bg-border); border: 1px solid var(--bg-border); color: var(--text); border-radius: 5px; cursor: pointer; }
+    .lang-btn.active { background: var(--blue); }
+    .error { color: #ff6b6b; font-size: 0.9em; margin-top: 0.3rem; }
+    .success { color: #10b981; padding: 1rem; background: rgba(16,185,129,0.1); border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Martin<span>Sharp</span> 🦞</div>
+    <a href="/" style="color: var(--muted); text-decoration: none;">← Back</a>
+  </nav>
+
+  <div class="container">
+    <h1>OpenClaw Starter Kit</h1>
+    <p style="color: var(--muted); margin-bottom: 2rem;">Complete guide to building your first autonomous AI agent</p>
+
+    <div style="margin-bottom: 2rem; display: flex; gap: 1rem;">
+      <button class="lang-btn active" data-lang="en">English</button>
+      <button class="lang-btn" data-lang="nl">Nederlands</button>
+      <button class="lang-btn" data-lang="de">Deutsch</button>
+    </div>
+
+    <div class="checkout-grid">
+      <div class="checkout-form">
+        <form id="checkoutForm">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+          <div class="form-group">
+            <label for="country">Country</label>
+            <select id="country" name="country" required>
+              <option value="NL">Netherlands</option>
+              <option value="DE">Germany</option>
+              <option value="US">United States</option>
+              <option value="GB">United Kingdom</option>
+              <option value="FR">France</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Card</label>
+            <div id="card-element"></div>
+            <div class="error" id="cardError"></div>
+          </div>
+          <button type="submit" id="submitBtn">Pay €29.99</button>
+        </form>
+        <div id="successMessage" class="success" style="display: none;">✅ Success! Check your email.</div>
+      </div>
+
+      <div class="summary">
+        <h3>Order</h3>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+          <span>OpenClaw Kit</span>
+          <span>€29.99</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-weight: 700;">
+          <span>Total</span>
+          <span>€29.99</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const stripe = Stripe('pk_live_51TGf4yPZWVHmPgB39wNAZVqwMhpLX7wpEWZDyjp7kUrnx5RkXZixs1G8wkQFJMcTunwIobXNfuO47b0pxkI0VriG00zHlSA2RQ');
+    const elements = stripe.elements();
+    const cardElement = elements.create('card');
+    cardElement.mount('#card-element');
+
+    let currentLanguage = 'en';
+    const productIds = {en: 'prod_UFrv6KQXPgZEpk', nl: 'prod_UFrwvzS4alZaCJ', de: 'prod_UFryHA6lvZyDRx'};
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        currentLanguage = e.target.dataset.lang;
+      });
+    });
+
+    document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+
+      const { token } = await stripe.createToken(cardElement);
+      if (token) {
+        try {
+          const response = await fetch('/api/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              tokenId: token.id,
+              email: document.getElementById('email').value,
+              name: document.getElementById('name').value,
+              productId: productIds[currentLanguage],
+              language: currentLanguage
+            })
+          });
+          const result = await response.json();
+          if (result.success) {
+            document.getElementById('checkoutForm').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+          }
+        } catch (err) {
+          document.getElementById('cardError').textContent = 'Error: ' + err.message;
+          submitBtn.disabled = false;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
